@@ -7,6 +7,7 @@ import {
   GraphQLString,
 } from 'graphql';
 import _ from 'lodash';
+import Author from '../models/author';
 
 // dumb data
 const books = [
@@ -94,6 +95,27 @@ const RootQuery = new GraphQLObjectType({
   },
 });
 
+const Mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addAuthor: {
+      type: AuthorType,
+      args: {
+        name: { type: GraphQLString },
+        age: { type: GraphQLInt },
+      },
+      resolve(parent, args) {
+        const author = new Author({
+          name: args.name,
+          age: args.age,
+        });
+        return author.save();
+      },
+    },
+  },
+});
+
 export default new GraphQLSchema({
   query: RootQuery,
+  mutation: Mutation,
 });
