@@ -1,0 +1,11 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Graphql service to display books data",
+  "main": "index.js",
+  "author": "Muhanned Noman <Muhanned.Noman@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
