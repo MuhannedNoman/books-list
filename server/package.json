@@ -6,10 +6,13 @@
   "author": "Muhanned Noman <Muhanned.Noman@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "esm": "^3.2.25",
     "express": "^4.17.1",
+    "express-graphql": "^0.11.0",
+    "graphql": "^15.3.0",
     "nodemon": "^2.0.4"
   },
   "scripts": {
-    "start": "nodemon index"
+    "start": "nodemon -r esm index"
   }
 }
