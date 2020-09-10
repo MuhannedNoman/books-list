@@ -1,4 +1,9 @@
-import { GraphQLObjectType, GraphQLSchema, GraphQLString } from 'graphql';
+import {
+  GraphQLID,
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLString,
+} from 'graphql';
 import _ from 'lodash';
 
 // dumb data
@@ -11,7 +16,7 @@ const books = [
 const BookType = new GraphQLObjectType({
   name: 'Book',
   fields: () => ({
-    id: { type: GraphQLString },
+    id: { type: GraphQLID },
     name: { type: GraphQLString },
     genre: { type: GraphQLString },
   }),
@@ -23,7 +28,7 @@ const RootQuery = new GraphQLObjectType({
     book: {
       type: BookType,
       args: {
-        id: { type: GraphQLString },
+        id: { type: GraphQLID },
       },
       resolve(parent, args) {
         //TODO get data from db
