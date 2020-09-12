@@ -1,5 +1,6 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
+import { GET_BOOKS } from '../BookList/BookList';
 
 const GET_AUTHORS = gql`
   {
@@ -48,6 +49,7 @@ const AddBook = () => {
         genre: formData.genre,
         authorId: formData.authorId,
       },
+      refetchQueries: [{ query: GET_BOOKS }],
     });
     !mutationError && setFormData(formDataObject);
   };
