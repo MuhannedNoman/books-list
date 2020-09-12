@@ -1,14 +1,7 @@
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import React from 'react';
-
-export const GET_BOOKS = gql`
-  {
-    books {
-      name
-      id
-    }
-  }
-`;
+import { GET_BOOKS } from '../../queries/Queries';
+import BookDetails from '../BookDetails';
 
 const BookList = () => {
   const { loading, error, data } = useQuery(GET_BOOKS);
@@ -23,6 +16,7 @@ const BookList = () => {
   return (
     <div>
       <ul id="book-list">{books}</ul>
+      <BookDetails />
     </div>
   );
 };
