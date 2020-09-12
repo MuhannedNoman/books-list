@@ -1,5 +1,6 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import React from 'react';
+import AddBook from './components/AddBook';
 import BookList from './components/BookList';
 import { CLIENT_LINK } from './env';
 
@@ -14,6 +15,7 @@ const App = () => {
       <div>
         <h1>Reading List</h1>
         <BookList />
+        <AddBook />
       </div>
     </ApolloProvider>
   );
