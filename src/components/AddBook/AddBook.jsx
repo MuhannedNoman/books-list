@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 
 const GET_AUTHORS = gql`
@@ -10,14 +10,27 @@ const GET_AUTHORS = gql`
   }
 `;
 
+const ADD_BOOK = gql`
+  mutation AddBook($name: String!, $genre: String!, $authorId: ID!) {
+    addBook(name: $name, genre: $genre, authorId: $authorId) {
+      name
+      id
+    }
+  }
+`;
+
 const AddBook = () => {
-  const [formData, setFormData] = useState({
-    bookName: '',
+  const formDataObject = {
+    name: '',
     genre: '',
     authorId: '',
-  });
+  };
+
+  const [formData, setFormData] = useState(formDataObject);
 
   const { loading, error, data } = useQuery(GET_AUTHORS);
+
+  const [addBook, { error: mutationError }] = useMutation(ADD_BOOK);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,7 +42,14 @@ const AddBook = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    addBook({
+      variables: {
+        name: formData.name,
+        genre: formData.genre,
+        authorId: formData.authorId,
+      },
+    });
+    !mutationError && setFormData(formDataObject);
   };
 
   if (loading) return <p>Loading data...</p>;
@@ -49,8 +69,8 @@ const AddBook = () => {
         <label>Book name:</label>
         <input
           type="text"
-          name="bookName"
-          value={formData.bookName}
+          name="name"
+          value={formData.name}
           onChange={handleChange}
         ></input>
       </div>
@@ -67,8 +87,14 @@ const AddBook = () => {
 
       <div className="field">
         <label>Author:</label>
-        <select name="authorId" onChange={handleChange}>
-          <option hidden={true}>Select author</option>
+        <select
+          name="authorId"
+          value={formData.authorId}
+          onChange={handleChange}
+        >
+          <option value="" hidden={true}>
+            Select author
+          </option>
           {authors}
         </select>
       </div>
